@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_laptop_dell_xps_15" model="product.template">
+        <field name="name">Dell XPS 15</field>
+        <field name="categ_id" ref="product_category_laptops"/>
+        <field name="public_categ_ids" eval="[Command.set([ref('product_public_category_laptops')])]"/>
+        <field name="sale_ok" eval="True"/>
+        <field name="is_published" eval="True"/>
+        <field name="list_price">1899.00</field>
+        <field name="brand">Dell</field>
+        <field name="processor">Intel Core i7-13700H</field>
+        <field name="ram">16 GB</field>
+        <field name="storage">512 GB SSD</field>
+        <field name="display_size">15.6"</field>
+        <field name="operating_system">Windows 11 Home</field>
+        <field name="featured" eval="True"/>
+        <field name="description_sale">A powerful, compact 15" laptop for creators and professionals.</field>
+    </record>
+
+    <record id="demo_laptop_hp_elitebook_840" model="product.template">
+        <field name="name">HP EliteBook 840</field>
+        <field name="categ_id" ref="product_category_laptops"/>
+        <field name="public_categ_ids" eval="[Command.set([ref('product_public_category_laptops')])]"/>
+        <field name="sale_ok" eval="True"/>
+        <field name="is_published" eval="True"/>
+        <field name="list_price">1299.00</field>
+        <field name="brand">HP</field>
+        <field name="processor">Intel Core i5-1335U</field>
+        <field name="ram">16 GB</field>
+        <field name="storage">256 GB SSD</field>
+        <field name="display_size">14"</field>
+        <field name="operating_system">Windows 11 Pro</field>
+        <field name="description_sale">Business-focused laptop with strong security features and battery life.</field>
+    </record>
+
+    <record id="demo_laptop_lenovo_x1_carbon" model="product.template">
+        <field name="name">Lenovo ThinkPad X1 Carbon</field>
+        <field name="categ_id" ref="product_category_laptops"/>
+        <field name="public_categ_ids" eval="[Command.set([ref('product_public_category_laptops')])]"/>
+        <field name="sale_ok" eval="True"/>
+        <field name="is_published" eval="True"/>
+        <field name="list_price">2199.00</field>
+        <field name="brand">Lenovo</field>
+        <field name="processor">Intel Core Ultra 7</field>
+        <field name="ram">32 GB</field>
+        <field name="storage">1 TB SSD</field>
+        <field name="display_size">14"</field>
+        <field name="operating_system">Windows 11 Pro</field>
+        <field name="featured" eval="True"/>
+        <field name="description_sale">Ultra-light business laptop known for its keyboard and durability.</field>
+    </record>
+
+    <record id="demo_laptop_asus_rog_zephyrus" model="product.template">
+        <field name="name">ASUS ROG Zephyrus G14</field>
+        <field name="categ_id" ref="product_category_laptops"/>
+        <field name="public_categ_ids" eval="[Command.set([ref('product_public_category_laptops')])]"/>
+        <field name="sale_ok" eval="True"/>
+        <field name="is_published" eval="True"/>
+        <field name="list_price">2399.00</field>
+        <field name="brand">ASUS</field>
+        <field name="processor">AMD Ryzen 9 8945HS</field>
+        <field name="ram">32 GB</field>
+        <field name="storage">1 TB SSD</field>
+        <field name="display_size">14"</field>
+        <field name="operating_system">Windows 11 Home</field>
+        <field name="description_sale">Compact gaming laptop with a dedicated GPU in a portable chassis.</field>
+    </record>
+
+    <record id="demo_laptop_apple_macbook_pro" model="product.template">
+        <field name="name">Apple MacBook Pro 14"</field>
+        <field name="categ_id" ref="product_category_laptops"/>
+        <field name="public_categ_ids" eval="[Command.set([ref('product_public_category_laptops')])]"/>
+        <field name="sale_ok" eval="True"/>
+        <field name="is_published" eval="True"/>
+        <field name="list_price">2499.00</field>
+        <field name="brand">Apple</field>
+        <field name="processor">Apple M3 Pro</field>
+        <field name="ram">18 GB</field>
+        <field name="storage">512 GB SSD</field>
+        <field name="display_size">14.2"</field>
+        <field name="operating_system">macOS</field>
+        <field name="featured" eval="True"/>
+        <field name="description_sale">High-performance laptop for professional creative and development work.</field>
+    </record>
+</odoo>

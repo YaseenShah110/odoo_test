@@ -1,0 +1,15 @@
+/* Laptop Store website page styling. Kept scoped under .laptop_store_page
+   so it never leaks into other website pages. */
+
+/* Default look for the header snippet (see laptop_page template). Purely a
+   starting point: once in the Website Builder, an editor can override the
+   background/text colors from the "Customize" panel like any other block. */
+.laptop_store_page .laptop_store_header {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.laptop_store_page .laptop_store_header h1,
+.laptop_store_page .laptop_store_header p {
+    color: #ffffff;
+}

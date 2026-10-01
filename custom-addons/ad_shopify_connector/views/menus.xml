@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_shopify_root"
+              name="Shopify"
+              web_icon="ad_shopify_connector,static/description/icon.png"
+              sequence="10"/>
+
+    <menuitem id="menu_shopify_dashboard"
+              name="Dashboard"
+              parent="menu_shopify_root"
+              action="action_shopify_dashboard"
+              sequence="5"/>
+
+    <menuitem id="menu_shopify_sales"
+              name="Sales"
+              parent="menu_shopify_root"
+              sequence="10"/>
+
+    <menuitem id="menu_shopify_orders"
+              name="Orders"
+              parent="menu_shopify_sales"
+              action="action_shopify_sale_order"
+              sequence="10"/>
+
+    <menuitem id="menu_shopify_customers"
+              name="Customers"
+              parent="menu_shopify_sales"
+              action="action_shopify_res_partner"
+              sequence="20"/>
+
+    <menuitem id="menu_shopify_products_root"
+              name="Products"
+              parent="menu_shopify_root"
+              sequence="20"/>
+
+    <menuitem id="menu_shopify_product_templates"
+              name="Products"
+              parent="menu_shopify_products_root"
+              action="action_shopify_product_template"
+              sequence="10"/>
+
+    <menuitem id="menu_shopify_config"
+              name="Configuration"
+              parent="menu_shopify_root"
+              groups="ad_shopify_connector.group_shopify_manager"
+              sequence="100"/>
+
+    <menuitem id="menu_shopify_instance"
+              name="Instances"
+              parent="menu_shopify_config"
+              action="action_shopify_instance"
+              groups="ad_shopify_connector.group_shopify_manager"
+              sequence="10"/>
+
+    <menuitem id="menu_shopify_locations"
+              name="Locations"
+              parent="menu_shopify_config"
+              action="action_shopify_location"
+              groups="ad_shopify_connector.group_shopify_manager"
+              sequence="20"/>
+
+    <menuitem id="menu_shopify_sync_logs"
+              name="Sync Logs"
+              parent="menu_shopify_config"
+              action="action_shopify_sync_log"
+              groups="ad_shopify_connector.group_shopify_manager"
+              sequence="30"/>
+</odoo>

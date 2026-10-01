@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_laptop_sale_receipt" model="ir.actions.report">
+        <field name="name">Sale Receipt</field>
+        <field name="model">laptop.product</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">laptop_store.report_laptop_sale_receipt</field>
+        <field name="report_file">laptop_store.report_laptop_sale_receipt</field>
+        <field name="print_report_name">'Receipt - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_laptop_product"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

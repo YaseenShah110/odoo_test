@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Adds a "Laptop Specifications" tab to the standard product form.
+        Inherited (not rebuilt) so the rest of the product form -
+        pricing, inventory, variants, website publishing, ... - keeps
+        working exactly as Odoo ships it.
+    -->
+    <record id="product_template_form_view_laptop_specs" model="ir.ui.view">
+        <field name="name">product.template.form.laptop.specs</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <page name="general_information" position="after">
+                <page string="Laptop Specifications" name="laptop_specs">
+                    <group>
+                        <group>
+                            <field name="brand"/>
+                            <field name="processor"/>
+                            <field name="ram"/>
+                            <field name="storage"/>
+                        </group>
+                        <group>
+                            <field name="display_size"/>
+                            <field name="operating_system"/>
+                            <field name="featured"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

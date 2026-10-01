@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shopify_instance_form" model="ir.ui.view">
+        <field name="name">shopify.instance.form</field>
+        <field name="model">shopify.instance</field>
+        <field name="arch" type="xml">
+            <form string="Shopify Instance">
+                <header>
+                    <button name="action_test_connection" type="object" string="Test Connection"
+                            class="btn-primary" invisible="state not in ('draft', 'error')"/>
+                    <button name="action_import_locations" type="object" string="Import Locations"
+                            class="btn-secondary" invisible="state != 'confirmed'"/>
+                    <button name="action_import_products" type="object" string="Import Products"
+                            class="btn-secondary" invisible="state != 'confirmed'"/>
+                    <button name="action_import_customers" type="object" string="Import Customers"
+                            class="btn-secondary" invisible="state != 'confirmed'"/>
+                    <button name="action_import_orders" type="object" string="Import Orders"
+                            class="btn-secondary" invisible="state != 'confirmed'"/>
+                    <button name="action_sync_inventory" type="object" string="Sync Inventory"
+                            class="btn-secondary" invisible="state != 'confirmed'"/>
+                    <button name="action_register_webhooks" type="object" string="Register/Update Webhooks"
+                            class="btn-info" invisible="state != 'confirmed'"/>
+                    <button name="action_delete_webhooks" type="object" string="Delete Webhooks"
+                            class="btn-danger" invisible="state != 'confirmed' or not webhooks_registered"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,error"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_products" type="object"
+                                class="oe_stat_button" icon="fa-th-list">
+                            <field name="product_count" widget="statinfo" string="Products"/>
+                        </button>
+                        <button name="action_view_orders" type="object"
+                                class="oe_stat_button" icon="fa-usd">
+                            <field name="order_count" widget="statinfo" string="Orders"/>
+                        </button>
+                        <button name="action_view_customers" type="object"
+                                class="oe_stat_button" icon="fa-users">
+                            <field name="customer_count" widget="statinfo" string="Customers"/>
+                        </button>
+                        <button name="action_view_sync_logs" type="object"
+                                class="oe_stat_button" icon="fa-history">
+                            <field name="sync_log_count" widget="statinfo" string="Sync Logs"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. My Shopify Store"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="API Credentials">
+                            <field name="shop_url"/>
+                            <field name="access_token" password="True"/>
+                            <field name="webhook_secret" password="True"/>
+                            <field name="webhooks_registered" widget="boolean_toggle" readonly="1"/>
+                        </group>
+                        <group string="Configuration">
+                            <field name="warehouse_id"/>
+                            <field name="pricelist_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="last_sync_date"/>
+                        </group>
+                    </group>
+                    <group string="Auto-Sync Settings">
+                        <group>
+                            <field name="auto_sync_orders" widget="boolean_toggle"/>
+                            <field name="auto_sync_products" widget="boolean_toggle"/>
+                            <field name="auto_sync_inventory" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopify_instance_list" model="ir.ui.view">
+        <field name="name">shopify.instance.list</field>
+        <field name="model">shopify.instance</field>
+        <field name="arch" type="xml">
+            <list string="Shopify Instances">
+                <field name="name"/>
+                <field name="shop_url"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'confirmed'"
+                       decoration-danger="state == 'error'"/>
+                <field name="webhooks_registered" string="Webhooks Active" widget="boolean_toggle" readonly="1"/>
+                <field name="last_sync_date"/>
+                <field name="product_count" string="Products"/>
+                <field name="order_count" string="Orders"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_shopify_instance_kanban" model="ir.ui.view">
+        <field name="name">shopify.instance.kanban</field>
+        <field name="model">shopify.instance</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="name"/>
+                <field name="shop_url"/>
+                <field name="state"/>
+                <field name="last_sync_date"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click o_has_icon oe_kanban_content">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="shop_url"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection"
+                                               options="{'classes': {'draft': 'default', 'confirmed': 'success', 'error': 'danger'}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_shopify_instance" model="ir.actions.act_window">
+        <field name="name">Shopify Instances</field>
+        <field name="res_model">shopify.instance</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first Shopify Instance</p>
+            <p>Connect Odoo to your Shopify store to sync products, orders, and customers.</p>
+        </field>
+    </record>
+</odoo>

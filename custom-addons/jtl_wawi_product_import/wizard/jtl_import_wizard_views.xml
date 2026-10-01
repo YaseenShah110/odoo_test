@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_jtl_import_wizard_form" model="ir.ui.view">
+        <field name="name">jtl.import.wizard.form</field>
+        <field name="model">jtl.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import JTL CSV Bundle" class="o_jtl_import_wizard">
+                <header>
+                    <button name="action_previous_step" type="object" string="Back" class="btn-secondary" invisible="wizard_step == 'files'"/>
+                    <button name="action_apply_profile" type="object" string="Load Mapping" class="btn-secondary" invisible="wizard_step != 'files' or not profile_id"/>
+                    <button name="action_update_profile" type="object" string="Profil aktualisieren" class="btn-secondary" invisible="wizard_step != 'files' or not profile_id"/>
+                    <button name="action_use_default_profile" type="object" string="Standard-Mapping" class="btn-secondary" invisible="wizard_step != 'files'"/>
+                    <button name="action_reset_mapping" type="object" string="Reset Mapping" class="btn-secondary" invisible="wizard_step == 'files'"/>
+                    <button name="action_next_step" type="object" string="Next" class="btn-secondary" invisible="wizard_step == 'review'"/>
+                    <button name="action_check_mapping" type="object" string="Mapping pruefen" class="btn-primary" invisible="wizard_step != 'mapping'"/>
+                    <button name="action_validate" type="object" string="Dry-Run / Validate" class="btn-primary" invisible="wizard_step != 'review'"/>
+                    <button name="action_validate_and_queue" type="object" string="Import starten" class="btn-primary" invisible="wizard_step != 'review'"/>
+                </header>
+
+                <group>
+                    <field name="wizard_step" widget="statusbar" statusbar_visible="files,mapping,review"/>
+                </group>
+
+                <group invisible="wizard_step != 'files'">
+                    <field name="precheck_message" nolabel="1" readonly="1" widget="html"/>
+                </group>
+
+                <group invisible="wizard_step != 'files'">
+                    <group>
+                        <field name="profile_id"/>
+                        <field name="batch_size"/>
+                        <field name="dry_run"/>
+                        <field name="update_existing_only"/>
+                        <field name="barcode_match_update"/>
+                        <field name="category_root_id" options="{'no_create': True}"/>
+                        <field name="category_import_mode"/>
+                        <field name="import_limit"/>
+                        <field name="headers_loaded" readonly="1"/>
+                        <field name="mapping_validated" readonly="1"/>
+                        <field name="available_file_keys" invisible="1"/>
+                        <field name="contacts_installed" readonly="1" invisible="1"/>
+                        <field name="website_sale_installed" readonly="1" invisible="1"/>
+                        <field name="product_variants_enabled" readonly="1" invisible="1"/>
+                        <field name="compare_list_price_enabled" readonly="1" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="import_stock"/>
+                        <field name="import_images"/>
+                        <field name="import_gallery_images"/>
+                        <field name="import_seo"/>
+                        <field name="manufacturer_create_brand" invisible="not manufacturer_file_data"/>
+                        <field name="save_profile"/>
+                        <field name="profile_name" invisible="not save_profile"/>
+                        <field name="profile_description" invisible="not save_profile"/>
+                    </group>
+                </group>
+
+                <group string="CSV-Dateien" invisible="wizard_step != 'files'">
+                    <group>
+                        <field name="article_master_file_data" filename="article_master_file_name"/>
+                        <field name="manufacturer_file_data" filename="manufacturer_file_name"/>
+                        <field name="eu_representative_file_data" filename="eu_representative_file_name"/>
+                        <field name="category_file_data" filename="category_file_name"/>
+                        <field name="supplierinfo_file_data" filename="supplierinfo_file_name"/>
+                        <field name="variation_combination_file_data" filename="variation_combination_file_name"/>
+                    </group>
+                    <group>
+                        <field name="supplier_master_file_data" filename="supplier_master_file_name"/>
+                        <field name="variation_definition_file_data" filename="variation_definition_file_name"/>
+                        <field name="attribute_file_data" filename="attribute_file_name"/>
+                        <field name="feature_file_data" filename="feature_file_name"/>
+                        <field name="bom_file_data" filename="bom_file_name"/>
+                    </group>
+                </group>
+
+                <notebook invisible="wizard_step == 'files'">
+                    <page string="Artikelstammdaten" invisible="',article_master,' not in available_file_keys">
+                        <field name="article_master_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="sequence" optional="hide"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" string="Importieren" readonly="is_reserved"/>
+                                <field name="source_column_label" string="CSV-Spalte"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype" string="Erkannt"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" string="Odoo-Feld" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="target_field_ttype" string="Feldtyp" readonly="1"/>
+                                <field name="field_required" string="Pflichtfeld" readonly="1"/>
+                                <field name="create_field_if_missing" string="Neues Feld" readonly="is_reserved"/>
+                                <field name="new_field_name" readonly="is_reserved"/>
+                                <field name="new_field_label" readonly="is_reserved"/>
+                                <field name="custom_field_ttype" string="Neuer Feldtyp" readonly="is_reserved"/>
+                                <field name="relation_model" invisible="custom_field_ttype != 'many2one'" readonly="is_reserved"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="status" readonly="1"/>
+                                <field name="note" readonly="1"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Hersteller" invisible="',manufacturer,' not in available_file_keys">
+                        <field name="manufacturer_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label" string="CSV-Spalte"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="create_field_if_missing" readonly="is_reserved"/>
+                                <field name="new_field_name" readonly="is_reserved"/>
+                                <field name="custom_field_ttype" readonly="is_reserved"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                                </list>
+                        </field>
+                    </page>
+                    <page string="EU-RP" invisible="',eu_representative,' not in available_file_keys">
+                        <field name="eu_representative_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label" string="CSV-Spalte"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                                </list>
+                        </field>
+                    </page>
+                    <page string="Kategorien" invisible="',category,' not in available_file_keys">
+                        <field name="category_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="create_field_if_missing" readonly="is_reserved"/>
+                                <field name="new_field_name" readonly="is_reserved"/>
+                                <field name="custom_field_ttype" readonly="is_reserved"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                                </list>
+                        </field>
+                    </page>
+                    <page string="Lieferantenartikel" invisible="',supplierinfo,' not in available_file_keys">
+                        <field name="supplierinfo_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="create_field_if_missing" readonly="is_reserved"/>
+                                <field name="new_field_name" readonly="is_reserved"/>
+                                <field name="custom_field_ttype" readonly="is_reserved"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Lieferantenstammdaten" invisible="',supplier_master,' not in available_file_keys">
+                        <field name="supplier_master_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" string="Importieren" readonly="is_reserved"/>
+                                <field name="source_column_label" string="CSV-Spalte"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype" string="Erkannt"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" string="Odoo-Feld" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="create_field_if_missing" string="Neues Feld" readonly="is_reserved"/>
+                                <field name="new_field_name" readonly="is_reserved"/>
+                                <field name="custom_field_ttype" string="Neuer Feldtyp" readonly="is_reserved"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="status" readonly="1"/>
+                                <field name="note" readonly="1"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Variationskombinationen" invisible="',variation_combination,' not in available_file_keys">
+                        <field name="variation_combination_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Variationen" invisible="',variation_definition,' not in available_file_keys">
+                        <field name="variation_definition_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                                </list>
+                        </field>
+                    </page>
+                    <page string="Attribute" invisible="',attribute,' not in available_file_keys">
+                        <field name="attribute_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="create_field_if_missing" readonly="is_reserved"/>
+                                <field name="new_field_name" readonly="is_reserved"/>
+                                <field name="custom_field_ttype" readonly="is_reserved"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                                </list>
+                        </field>
+                    </page>
+                    <page string="Eigene Merkmale" invisible="',feature,' not in available_file_keys">
+                        <field name="feature_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="create_field_if_missing" readonly="is_reserved"/>
+                                <field name="new_field_name" readonly="is_reserved"/>
+                                <field name="custom_field_ttype" readonly="is_reserved"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                                </list>
+                        </field>
+                    </page>
+                    <page string="Stueckliste" invisible="',bom,' not in available_file_keys">
+                        <field name="bom_mapping_line_ids" nolabel="1" context="{'active_test': False}">
+                            <list editable="bottom" limit="1000">
+                                <field name="is_reserved" column_invisible="1"/>
+                                <field name="active" readonly="is_reserved"/>
+                                <field name="import_enabled" readonly="is_reserved"/>
+                                <field name="source_column_label"/>
+                                <field name="sample_value"/>
+                                <field name="detected_ttype"/>
+                                <field name="target_model" readonly="is_reserved"/>
+                                <field name="target_field_id" options="{'no_create': True}" readonly="is_reserved"/>
+                                <field name="target_field_name" string="Target (Pseudo/Lookup)" optional="show" readonly="is_reserved"/>
+                                <field name="relation_hint" string="Lookup-Hinweis" readonly="1" optional="show"/>
+                                <field name="transform_logic" readonly="is_reserved"/>
+                                <field name="note" readonly="1"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+
+                <footer>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_jtl_import_wizard" model="ir.actions.act_window">
+        <field name="name">New JTL Import</field>
+        <field name="res_model">jtl.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_jtl_import_wizard" name="New Import" parent="jtl_wawi_product_import.menu_jtl_import_root" action="action_jtl_import_wizard" sequence="5"/>
+</odoo>

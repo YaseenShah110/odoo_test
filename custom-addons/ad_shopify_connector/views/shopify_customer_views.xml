@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_shopify_res_partner_list" model="ir.ui.view">
+        <field name="name">res.partner.shopify.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Shopify Customers">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="shopify_instance_id"/>
+                <field name="shopify_customer_id"/>
+                <field name="shopify_marketing_opt_in" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_shopify_res_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.shopify.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_push_to_shopify" type="object" string="Export to Shopify" class="btn-secondary" groups="ad_shopify_connector.group_shopify_user"/>
+                    <button name="action_sync_from_shopify" type="object" string="Sync from Shopify" class="btn-secondary" groups="ad_shopify_connector.group_shopify_user" invisible="not shopify_customer_id"/>
+                </header>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Shopify" name="ad_shopify_connector" groups="ad_shopify_connector.group_shopify_user">
+                    <group>
+                        <group>
+                            <field name="shopify_instance_id"/>
+                            <field name="shopify_customer_id"/>
+                        </group>
+                        <group>
+                            <field name="shopify_marketing_opt_in" widget="boolean_toggle"/>
+                            <field name="shopify_customer_tags"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_shopify_res_partner" model="ir.actions.act_window">
+        <field name="name">Shopify Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('shopify_instance_id', '!=', False)]</field>
+        <field name="view_id" ref="view_shopify_res_partner_list"/>
+    </record>
+
+    <record id="action_shopify_sync_customers" model="ir.actions.server">
+        <field name="name">Sync from Shopify</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.action_sync_from_shopify()
+        </field>
+    </record>
+</odoo>

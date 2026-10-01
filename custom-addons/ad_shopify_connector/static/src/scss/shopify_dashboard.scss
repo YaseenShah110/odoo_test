@@ -1,0 +1,44 @@
+.o_shopify_dashboard {
+    background-color: #f8f9fa;
+    
+    .o_kpi_card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: none;
+        border-radius: 0.75rem;
+        
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        }
+
+        &.bg-primary {
+            background: linear-gradient(135deg, #714B67 0%, #5a3c52 100%) !important;
+        }
+        &.bg-success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+        }
+        &.bg-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #0dcaf0 100%) !important;
+        }
+        &.bg-warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%) !important;
+        }
+        
+        .card-title {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+    }
+
+    .card {
+        border-radius: 0.75rem;
+        
+        .card-header {
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+    }
+
+    canvas {
+        min-height: 300px;
+    }
+}

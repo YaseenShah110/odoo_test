@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_laptop_sale_receipt">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="laptop_store.report_laptop_sale_receipt_document"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_laptop_sale_receipt_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                    <div>
+                        <h1 class="mb-1" t-field="doc.name"/>
+                        <div class="text-muted">
+                            <span t-field="doc.brand_id.name"/>
+                            <t t-if="doc.category_id"> · <span t-field="doc.category_id.name"/></t>
+                        </div>
+                    </div>
+                    <img t-if="doc.image_128" t-att-src="image_data_uri(doc.image_128)"
+                         style="height:96px;width:96px;object-fit:cover;border-radius:8px;border:1px solid #ddd;"
+                         alt="Laptop"/>
+                </div>
+
+                <span t-attf-class="badge rounded-pill px-3 py-2 mb-4 #{'text-bg-success' if doc.state == 'sold' else ('text-bg-warning' if doc.state == 'reserved' else 'text-bg-secondary')}">
+                    <span t-field="doc.state"/>
+                </span>
+
+                <table class="table table-borderless table-sm mb-4">
+                    <tbody>
+                        <tr>
+                            <td class="text-muted" style="width:35%;">Serial Number</td>
+                            <td class="fw-bold"><span t-field="doc.serial_number"/></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Processor</td>
+                            <td><span t-field="doc.processor"/></td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Memory</td>
+                            <td><span t-field="doc.ram_gb"/> GB RAM</td>
+                        </tr>
+                        <tr>
+                            <td class="text-muted">Storage</td>
+                            <td><span t-field="doc.storage_gb"/> GB</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-between align-items-baseline border-top border-bottom py-3 mb-4">
+                    <span class="fs-5">Price</span>
+                    <span class="fs-3 fw-bold text-primary" t-field="doc.price"
+                          t-options="{'widget': 'float', 'precision': 2}"/>
+                </div>
+
+                <div t-if="doc.state == 'sold'" class="border rounded-3 p-4 bg-light">
+                    <h5 class="text-muted mb-2">Sold To</h5>
+                    <p class="fs-5 fw-bold mb-1" t-field="doc.customer_id.name"/>
+                    <p class="text-muted mb-0">Sale Date: <span t-field="doc.sale_date"/></p>
+                </div>
+                <div t-else="" class="border rounded-3 p-4 bg-light text-muted text-center">
+                    This laptop has not been sold yet.
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

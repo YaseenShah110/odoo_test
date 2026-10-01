@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ad_shopify_connector.ShopifyDashboard" owl="1">
+        <div class="o_shopify_dashboard container-fluid py-4 h-100 overflow-auto">
+
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="fw-bold mb-0" style="color:#714B67;">
+                        <i class="fa fa-shopping-bag me-2"/>Shopify Overview
+                    </h1>
+                    <small class="text-muted">Real-time Shopify ↔ Odoo sync status</small>
+                </div>
+                <button class="btn btn-primary shadow-sm px-4" t-on-click="_fetchDashboardData">
+                    <i class="fa fa-refresh me-2"/>Refresh
+                </button>
+            </div>
+
+
+            <div t-if="state.isLoading" class="d-flex justify-content-center align-items-center" style="height:300px;">
+                <div class="spinner-border" style="color:#714B67;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <div t-else="">
+
+                <div class="row g-3 mb-4">
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="card border-0 shadow-sm h-100 o_kpi_card" t-on-click="_openInstances"
+                             style="cursor:pointer; border-left: 4px solid #714B67 !important;">
+                            <div class="card-body text-center py-3">
+                                <div class="text-muted small text-uppercase fw-semibold mb-1">Instances</div>
+                                <h3 class="fw-bold mb-0" style="color:#714B67;">
+                                    <t t-esc="state.data.kpis.instances"/>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="card border-0 shadow-sm h-100 o_kpi_card" t-on-click="_openOrders"
+                             style="cursor:pointer; border-left: 4px solid #28a745 !important;">
+                            <div class="card-body text-center py-3">
+                                <div class="text-muted small text-uppercase fw-semibold mb-1">Synced Orders</div>
+                                <h3 class="fw-bold mb-0 text-success">
+                                    <t t-esc="state.data.kpis.orders"/>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="card border-0 shadow-sm h-100 o_kpi_card" t-on-click="_openProducts"
+                             style="cursor:pointer; border-left: 4px solid #17a2b8 !important;">
+                            <div class="card-body text-center py-3">
+                                <div class="text-muted small text-uppercase fw-semibold mb-1">Synced Products</div>
+                                <h3 class="fw-bold mb-0 text-info">
+                                    <t t-esc="state.data.kpis.products"/>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-4 col-6">
+                        <div class="card border-0 shadow-sm h-100 o_kpi_card" t-on-click="_openCustomers"
+                             style="cursor:pointer; border-left: 4px solid #ffc107 !important;">
+                            <div class="card-body text-center py-3">
+                                <div class="text-muted small text-uppercase fw-semibold mb-1">Synced Customers</div>
+                                <h3 class="fw-bold mb-0 text-warning">
+                                    <t t-esc="state.data.kpis.customers"/>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-8">
+                        <div class="card border-0 shadow-sm h-100"
+                             style="border-left: 4px solid #6f42c1 !important; background: linear-gradient(135deg,#714B67,#9b5e8a);">
+                            <div class="card-body text-white py-3">
+                                <div class="small text-uppercase fw-semibold opacity-75 mb-1">
+                                    Revenue This Month
+                                </div>
+                                <h2 class="fw-bold mb-0">
+                                    <t t-esc="'$' + (state.data.kpis.monthly_revenue || 0).toLocaleString(undefined, {maximumFractionDigits:2})"/>
+                                </h2>
+                                <small class="opacity-75">Confirmed + Done orders</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-7">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white border-0 pt-3 pb-0">
+                                <h6 class="fw-bold text-muted mb-0">Orders — Last 30 Days</h6>
+                            </div>
+                            <div class="card-body" style="height:280px;">
+                                <canvas t-ref="chartCanvas"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm h-100">
+                            <div class="card-header bg-white border-0 pt-3 pb-0">
+                                <h6 class="fw-bold text-muted mb-0">Latest Synced Orders</h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-borderless mb-0 align-middle small">
+                                        <thead class="table-light text-muted">
+                                            <tr>
+                                                <th class="ps-3">Order</th>
+                                                <th>Customer</th>
+                                                <th>Status</th>
+                                                <th class="text-end pe-3">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="state.data.recent_orders" t-as="order" t-key="order.id">
+                                                <td class="ps-3 fw-semibold" style="color:#714B67;">
+                                                    <t t-esc="order.name"/>
+                                                </td>
+                                                <td class="text-truncate" style="max-width:120px;">
+                                                    <t t-esc="order.partner_id[1]"/>
+                                                </td>
+                                                <td>
+                                                    <span t-attf-class="badge bg-#{order.shopify_fulfillment_status === 'fulfilled' ? 'success' : order.shopify_fulfillment_status === 'partial' ? 'warning' : 'secondary'}">
+                                                        <t t-esc="order.shopify_fulfillment_status || 'unfulfilled'"/>
+                                                    </span>
+                                                </td>
+                                                <td class="text-end pe-3 fw-semibold">
+                                                    $<t t-esc="(order.amount_total || 0).toFixed(2)"/>
+                                                </td>
+                                            </tr>
+                                            <tr t-if="!state.data.recent_orders.length">
+                                                <td colspan="4" class="text-center text-muted py-4">
+                                                    No synced orders yet.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row g-3">
+                    <div class="col-lg-7">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white border-0 pt-3 pb-0">
+                                <h6 class="fw-bold text-muted mb-0">Connected Instances</h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-borderless mb-0 align-middle small">
+                                        <thead class="table-light text-muted">
+                                            <tr>
+                                                <th class="ps-3">Instance</th>
+                                                <th>Status</th>
+                                                <th class="text-center">Products</th>
+                                                <th class="text-center">Orders</th>
+                                                <th class="text-center">Customers</th>
+                                                <th>Last Sync</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="state.data.instances" t-as="inst" t-key="inst.id">
+                                                <td class="ps-3 fw-semibold">
+                                                    <t t-esc="inst.name"/>
+                                                    <div class="text-muted" style="font-size:0.75rem;">
+                                                        <t t-esc="inst.shop_url"/>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span t-attf-class="badge bg-#{inst.state === 'confirmed' ? 'success' : inst.state === 'error' ? 'danger' : 'secondary'}">
+                                                        <t t-esc="inst.state"/>
+                                                    </span>
+                                                </td>
+                                                <td class="text-center"><t t-esc="inst.products"/></td>
+                                                <td class="text-center"><t t-esc="inst.orders"/></td>
+                                                <td class="text-center"><t t-esc="inst.customers"/></td>
+                                                <td class="text-muted"><t t-esc="inst.last_sync"/></td>
+                                            </tr>
+                                            <tr t-if="!state.data.instances.length">
+                                                <td colspan="6" class="text-center text-muted py-4">
+                                                    No instances configured.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-header bg-white border-0 pt-3 pb-0">
+                                <h6 class="fw-bold text-muted mb-0">Recent Sync Activity</h6>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-borderless mb-0 align-middle small">
+                                        <thead class="table-light text-muted">
+                                            <tr>
+                                                <th class="ps-3">Type</th>
+                                                <th>Instance</th>
+                                                <th>Result</th>
+                                                <th class="text-end pe-3">Records</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="state.data.recent_logs" t-as="log" t-key="log.id">
+                                                <td class="ps-3 text-capitalize fw-semibold">
+                                                    <t t-esc="log.sync_type"/>
+                                                </td>
+                                                <td><t t-esc="log.instance_id and log.instance_id[1] or 'N/A'"/></td>
+                                                <td>
+                                                    <span t-attf-class="badge bg-#{log.state === 'success' ? 'success' : log.state === 'error' ? 'danger' : 'warning'}">
+                                                        <t t-esc="log.state"/>
+                                                    </span>
+                                                </td>
+                                                <td class="text-end pe-3">
+                                                    <t t-esc="log.records_processed"/>
+                                                    <t t-if="log.records_failed"> / <span class="text-danger"><t t-esc="log.records_failed"/> ✗</span></t>
+                                                </td>
+                                            </tr>
+                                            <tr t-if="!state.data.recent_logs.length">
+                                                <td colspan="4" class="text-center text-muted py-4">
+                                                    No sync activity yet.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

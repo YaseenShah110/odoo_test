@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        A plain Website page: no custom controller serves /laptops anymore
+        (see data/website_page_data.xml) - Odoo's own generic page dispatch
+        renders this template directly, exactly like a page built through
+        the Website Builder's "+New Page". That's what makes the whole
+        canvas below (one big "oe_structure") fully drag-and-drop /
+        customizable, on par with any other Odoo theme page.
+    -->
+    <template id="laptop_page" name="Laptop Store">
+        <t t-call="website.layout">
+            <t t-set="laptops_category_id" t-value="request.env.ref('laptop_store_website.product_public_category_laptops').id"/>
+
+            <div id="wrap" class="oe_structure oe_empty laptop_store_page">
+
+                <!--
+                    Header, written as an actual Odoo snippet (the same
+                    "s_title" markup/classes Odoo's own pages use, see
+                    addons/website/views/snippets/s_title.xml). That's what
+                    gives it the full Website Builder "Customize" panel
+                    (background, colors, spacing, ...) and lets an editor
+                    delete it, duplicate it, or drag in a different block.
+                -->
+                <section class="s_title pt48 pb48 laptop_store_header" data-vcss="001" data-snippet="s_title">
+                    <div class="container s_allow_columns text-center">
+                        <h1>Laptop Store</h1>
+                        <p class="lead">Explore our latest laptops</p>
+                    </div>
+                </section>
+
+                <!--
+                    The laptop listing itself uses Odoo's native "Products"
+                    dynamic snippet (website_sale) instead of a hand-built
+                    grid. It fetches products client-side (see
+                    /website/snippet/filters), pre-filtered to the Laptops
+                    category, so it can safely live in this same editable
+                    canvas: an editor gets the full native product-block
+                    Customize options (layout, columns, count, colors, ...)
+                    and can move/duplicate/remove it like any other block,
+                    without ever risking a stale server-rendered snapshot.
+                -->
+                <section data-snippet="s_dynamic_snippet_products"
+                         class="s_dynamic_snippet_products s_dynamic pt48 pb48 o_colored_level"
+                         data-name="Our Laptops"
+                         t-att-data-filter-id="request.env.ref('website_sale.dynamic_filter_newest_products').id"
+                         data-template-key="website_sale.dynamic_filter_template_product_product_products_item"
+                         t-att-data-product-category-id="laptops_category_id"
+                         data-number-of-elements="8"
+                         data-number-of-elements-small-devices="1"
+                         data-number-of-records="16"
+                         data-carousel-interval="5000">
+                    <div class="container">
+                        <div class="row s_nb_column_fixed">
+                            <section class="s_dynamic_snippet_title oe_unremovable oe_unmovable d-flex flex-column flex-md-row justify-content-between mb-lg-0 pb-3 pb-md-0">
+                                <div>
+                                    <h2 class="h3">Our Laptops</h2>
+                                    <p class="lead">Browse our current laptop catalogue</p>
+                                </div>
+                                <div>
+                                    <a title="See All" href="/shop">See all<span class="fa fa-long-arrow-right ms-2"/></a>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="o_not_editable">
+                            <div class="dynamic_snippet_template"/>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+</odoo>

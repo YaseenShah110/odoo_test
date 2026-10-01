@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Website (public) category used to group laptops on the Shop and to
+        filter the curated /laptops page. Using product.public.category -
+        Odoo's own website navigation model - instead of a custom one keeps
+        laptops visible through the standard Shop category sidebar/menu.
+    -->
+    <record id="product_public_category_laptops" model="product.public.category">
+        <field name="name">Laptops</field>
+    </record>
+
+    <!-- Internal category for backend organization (Sales > Products). -->
+    <record id="product_category_laptops" model="product.category">
+        <field name="name">Laptops</field>
+    </record>
+</odoo>

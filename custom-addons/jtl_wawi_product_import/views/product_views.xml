@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_template_form_jtl_import" model="ir.ui.view">
+        <field name="name">product.template.form.jtl.import</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_information']//field[@name='barcode']" position="after">
+                <field name="manufacturer_sku"/>
+            </xpath>
+            <xpath expr="//page[@name='general_information']/group" position="after">
+                <group string="JTL">
+                    <group>
+                        <field name="manufacturer_id"/>
+                        <field name="eu_responsible_partner_id"/>
+                        <field name="brand_id"/>
+                    </group>
+                    <group>
+                        <field name="length"/>
+                        <field name="width"/>
+                        <field name="height"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_laptop_store_root" name="Laptop Store" sequence="10"/>
+
+    <menuitem id="menu_laptop_product" name="Laptops"
+              parent="menu_laptop_store_root"
+              action="action_laptop_product" sequence="10"/>
+
+    <menuitem id="menu_laptop_configuration" name="Configuration"
+              parent="menu_laptop_store_root" sequence="90"/>
+
+    <menuitem id="menu_laptop_brand" name="Brands"
+              parent="menu_laptop_configuration"
+              action="action_laptop_brand" sequence="10"/>
+
+    <menuitem id="menu_laptop_category" name="Categories"
+              parent="menu_laptop_configuration"
+              action="action_laptop_category" sequence="20"/>
+</odoo>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="category_gaming" model="laptop.category">
+        <field name="name">Gaming</field>
+    </record>
+    <record id="category_business" model="laptop.category">
+        <field name="name">Business</field>
+    </record>
+    <record id="category_ultrabook" model="laptop.category">
+        <field name="name">Ultrabook</field>
+    </record>
+
+    <record id="brand_dell" model="laptop.brand">
+        <field name="name">Dell</field>
+        <field name="country">USA</field>
+    </record>
+    <record id="brand_hp" model="laptop.brand">
+        <field name="name">HP</field>
+        <field name="country">USA</field>
+    </record>
+    <record id="brand_lenovo" model="laptop.brand">
+        <field name="name">Lenovo</field>
+        <field name="country">China</field>
+    </record>
+    <record id="brand_asus" model="laptop.brand">
+        <field name="name">Asus</field>
+        <field name="country">Taiwan</field>
+    </record>
+
+    <record id="customer_1" model="res.partner">
+        <field name="name">Acme Corporation</field>
+    </record>
+    <record id="customer_2" model="res.partner">
+        <field name="name">Globex Ltd</field>
+    </record>
+    <record id="customer_3" model="res.partner">
+        <field name="name">Initech</field>
+    </record>
+
+    <record id="laptop_1" model="laptop.product">
+        <field name="name">Dell XPS 15</field>
+        <field name="serial_number">SN-DELL-0001</field>
+        <field name="brand_id" ref="brand_dell"/>
+        <field name="category_id" ref="category_ultrabook"/>
+        <field name="processor">Intel Core i7</field>
+        <field name="ram_gb">16</field>
+        <field name="storage_gb">512</field>
+        <field name="price">1499.0</field>
+        <field name="state">draft</field>
+    </record>
+
+    <record id="laptop_2" model="laptop.product">
+        <field name="name">Dell Inspiron 14</field>
+        <field name="serial_number">SN-DELL-0002</field>
+        <field name="brand_id" ref="brand_dell"/>
+        <field name="category_id" ref="category_business"/>
+        <field name="processor">Intel Core i5</field>
+        <field name="ram_gb">8</field>
+        <field name="storage_gb">256</field>
+        <field name="price">699.0</field>
+        <field name="state">in_stock</field>
+    </record>
+
+    <record id="laptop_3" model="laptop.product">
+        <field name="name">HP Omen 16</field>
+        <field name="serial_number">SN-HP-0001</field>
+        <field name="brand_id" ref="brand_hp"/>
+        <field name="category_id" ref="category_gaming"/>
+        <field name="processor">AMD Ryzen 7</field>
+        <field name="ram_gb">32</field>
+        <field name="storage_gb">1024</field>
+        <field name="price">1899.0</field>
+        <field name="state">in_stock</field>
+    </record>
+
+    <record id="laptop_4" model="laptop.product">
+        <field name="name">HP EliteBook 840</field>
+        <field name="serial_number">SN-HP-0002</field>
+        <field name="brand_id" ref="brand_hp"/>
+        <field name="category_id" ref="category_business"/>
+        <field name="processor">Intel Core i7</field>
+        <field name="ram_gb">16</field>
+        <field name="storage_gb">512</field>
+        <field name="price">1299.0</field>
+        <field name="state">reserved</field>
+        <field name="customer_id" ref="customer_1"/>
+    </record>
+
+    <record id="laptop_5" model="laptop.product">
+        <field name="name">Lenovo ThinkPad X1</field>
+        <field name="serial_number">SN-LEN-0001</field>
+        <field name="brand_id" ref="brand_lenovo"/>
+        <field name="category_id" ref="category_business"/>
+        <field name="processor">Intel Core i7</field>
+        <field name="ram_gb">16</field>
+        <field name="storage_gb">1024</field>
+        <field name="price">1599.0</field>
+        <field name="state">sold</field>
+        <field name="customer_id" ref="customer_2"/>
+        <field name="sale_date" eval="'2026-07-01'"/>
+    </record>
+
+    <record id="laptop_6" model="laptop.product">
+        <field name="name">Lenovo Legion 5</field>
+        <field name="serial_number">SN-LEN-0002</field>
+        <field name="brand_id" ref="brand_lenovo"/>
+        <field name="category_id" ref="category_gaming"/>
+        <field name="processor">AMD Ryzen 9</field>
+        <field name="ram_gb">32</field>
+        <field name="storage_gb">1024</field>
+        <field name="price">1799.0</field>
+        <field name="state">in_stock</field>
+    </record>
+
+    <record id="laptop_7" model="laptop.product">
+        <field name="name">Asus ZenBook 14</field>
+        <field name="serial_number">SN-ASUS-0001</field>
+        <field name="brand_id" ref="brand_asus"/>
+        <field name="category_id" ref="category_ultrabook"/>
+        <field name="processor">Intel Core i5</field>
+        <field name="ram_gb">16</field>
+        <field name="storage_gb">512</field>
+        <field name="price">1099.0</field>
+        <field name="state">draft</field>
+    </record>
+
+    <record id="laptop_8" model="laptop.product">
+        <field name="name">Asus ROG Strix</field>
+        <field name="serial_number">SN-ASUS-0002</field>
+        <field name="brand_id" ref="brand_asus"/>
+        <field name="category_id" ref="category_gaming"/>
+        <field name="processor">AMD Ryzen 9</field>
+        <field name="ram_gb">32</field>
+        <field name="storage_gb">2048</field>
+        <field name="price">2199.0</field>
+        <field name="state">sold</field>
+        <field name="customer_id" ref="customer_3"/>
+        <field name="sale_date" eval="'2026-08-01'"/>
+    </record>
+</odoo>

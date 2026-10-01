@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Registers /laptops as a proper Website page (not just a bare
+        controller route). This is what makes it show up under
+        Website > Site > Pages, exposes the "Edit"/"Customize" toolbar,
+        and lets a website admin publish/unpublish, rename, or edit SEO
+        fields for it without touching code.
+    -->
+    <record id="website_page_laptop" model="website.page">
+        <field name="url">/laptops</field>
+        <field name="view_id" ref="laptop_page"/>
+        <field name="is_published">True</field>
+        <field name="website_indexed">True</field>
+        <field name="website_meta_description">Browse our current laptop catalogue.</field>
+    </record>
+</odoo>

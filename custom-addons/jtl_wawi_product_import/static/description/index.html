@@ -1,0 +1,92 @@
+<div style="max-width: 1080px; margin: 0 auto; font-family: Arial, sans-serif; color: #1f2937; background: #f6f7f9; padding: 24px;">
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px; margin-bottom: 20px;">
+        <h1 style="margin: 0 0 16px; font-size: 38px; color: #0f172a;">JTL Wawi Product Import</h1>
+        <h2 style="margin: 0 0 12px; font-size: 28px; color: #0f172a;">Description</h2>
+        <p style="margin: 0; line-height: 1.7;">
+            <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">jtl_wawi_product_import</span>
+            imports JTL-Wawi CSV exports into Odoo through a staged multi-file workflow. The module provides a guided import wizard,
+            per-file field mapping, barcode conflict handling, parent-child product linking, supplier synchronization, SEO field import,
+            and queued background processing for large product datasets.
+        </p>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 20px; margin-bottom: 20px;">
+        <h2 style="margin: 0 0 16px; font-size: 28px; color: #0f172a;">Main Overview</h2>
+        <img
+            src="main_screenshot.png"
+            alt="JTL Wawi Product Import main overview"
+            style="display: block; width: 100%; height: auto; border: 1px solid #e5e7eb; border-radius: 12px;"
+        />
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px; margin-bottom: 20px;">
+        <h2 style="margin: 0 0 12px; font-size: 28px; color: #0f172a;">Highlights</h2>
+        <ul style="margin: 0; padding-left: 22px; line-height: 1.8;">
+            <li>Multi-file wizard for article master data, manufacturers, EU representatives, categories, supplier data, variations, attributes, features, and BOM rows</li>
+            <li>Per-file CSV header detection with configurable field mapping and optional profile reuse</li>
+            <li>Barcode conflict handling with skip mode or targeted match-update behavior</li>
+            <li>Parent-child linking for variants and staged import processing for large files</li>
+            <li>Manufacturer, brand, and EU responsible synchronization during import</li>
+            <li>Supplierinfo, stock, images, SEO fields, and BOM preparation support</li>
+        </ul>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px; margin-bottom: 20px;">
+        <h2 style="margin: 0 0 18px; font-size: 28px; color: #0f172a;">Feature Overview</h2>
+
+        <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+            <h3 style="margin: 0 0 10px; font-size: 22px; color: #0f172a;">Wizard and Mapping</h3>
+            <ul style="margin: 0; padding-left: 22px; line-height: 1.8;">
+                <li>Uploads multiple JTL CSV files in one guided import run</li>
+                <li>Builds separate mapping tabs for each source file type</li>
+                <li>Supports reusable mapping profiles through <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">jtl.import.profile</span></li>
+                <li>Allows selective column activation instead of forcing full file imports</li>
+                <li>Validates required mappings before the run is queued</li>
+            </ul>
+        </div>
+
+        <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+            <h3 style="margin: 0 0 10px; font-size: 22px; color: #0f172a;">Product and Partner Processing</h3>
+            <ul style="margin: 0; padding-left: 22px; line-height: 1.8;">
+                <li>Creates or updates products from staged article master rows</li>
+                <li>Links parent and variant products based on imported SKU relationships</li>
+                <li>Maps manufacturers and EU representative data to partner and brand records</li>
+                <li>Updates supplierinfo records from supplier CSV exports</li>
+                <li>Synchronizes SEO fields, descriptions, dimensions, images, and stock-related values when available</li>
+            </ul>
+        </div>
+
+        <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
+            <h3 style="margin: 0 0 10px; font-size: 22px; color: #0f172a;">Staging and Execution</h3>
+            <ul style="margin: 0; padding-left: 22px; line-height: 1.8;">
+                <li>Stages parsed rows before full processing to keep imports traceable</li>
+                <li>Runs product processing in queueable batches through <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">jtl.import.run</span></li>
+                <li>Tracks processing state, progress, and field-level log messages</li>
+                <li>Supports reset, requeue, and failure diagnostics for operational imports</li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px; margin-bottom: 20px;">
+        <h2 style="margin: 0 0 16px; font-size: 28px; color: #0f172a;">Requirements</h2>
+        <ul style="margin: 0; padding-left: 22px; line-height: 1.8;">
+            <li>Odoo modules: <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">account</span>, <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">contacts</span>, <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">mail</span>, <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">product</span>, <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">purchase_stock</span>, <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">stock</span></li>
+            <li>Install <span style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; font-family: monospace;">website_sale</span> if website and SEO target fields should be populated in the full website context</li>
+            <li>Enable product variants in Odoo if variation CSV files should be imported into variant structures</li>
+            <li>Install MRP-related functionality if BOM rows should be turned into real bill of materials records</li>
+        </ul>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 28px;">
+        <h2 style="margin: 0 0 16px; font-size: 28px; color: #0f172a;">Typical Flow</h2>
+        <ol style="margin: 0; padding-left: 22px; line-height: 1.8;">
+            <li>Upload one or more JTL export files in the import wizard.</li>
+            <li>Review generated CSV headers and map the active columns per file.</li>
+            <li>Validate the staged run and queue it for background processing.</li>
+            <li>Monitor progress and logs from the import run record.</li>
+            <li>Requeue or reset the run if follow-up corrections are needed.</li>
+        </ol>
+    </div>
+
+</div>

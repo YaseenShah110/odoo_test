@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_laptop_category_salesperson,laptop.category.salesperson,model_laptop_category,group_laptop_salesperson,1,0,0,0
+access_laptop_category_manager,laptop.category.manager,model_laptop_category,group_laptop_manager,1,1,1,1
+access_laptop_brand_salesperson,laptop.brand.salesperson,model_laptop_brand,group_laptop_salesperson,1,0,0,0
+access_laptop_brand_manager,laptop.brand.manager,model_laptop_brand,group_laptop_manager,1,1,1,1
+access_laptop_product_salesperson,laptop.product.salesperson,model_laptop_product,group_laptop_salesperson,1,0,0,0
+access_laptop_product_manager,laptop.product.manager,model_laptop_product,group_laptop_manager,1,1,1,1

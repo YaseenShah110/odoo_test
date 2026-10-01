@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Adds a "Specifications" section to the standard Shop product page
+        (website_sale.product) for laptops, right below the main product
+        detail block. Inherited, not rebuilt: the add-to-cart form, variant
+        selection, price, image gallery, etc. all keep working exactly as
+        Odoo ships them - this only appends extra, laptop-specific content.
+    -->
+    <template id="product_page_laptop_specs" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='oe_structure_website_sale_product_2']" position="before">
+            <div t-if="product.processor or product.ram or product.storage or product.display_size or product.operating_system"
+                 class="container my-4">
+                <h4>Specifications</h4>
+                <table class="table table-sm w-auto">
+                    <tbody>
+                        <tr t-if="product.brand">
+                            <th class="pe-4">Brand</th>
+                            <td t-esc="product.brand"/>
+                        </tr>
+                        <tr t-if="product.processor">
+                            <th class="pe-4">Processor</th>
+                            <td t-esc="product.processor"/>
+                        </tr>
+                        <tr t-if="product.ram">
+                            <th class="pe-4">RAM</th>
+                            <td t-esc="product.ram"/>
+                        </tr>
+                        <tr t-if="product.storage">
+                            <th class="pe-4">Storage</th>
+                            <td t-esc="product.storage"/>
+                        </tr>
+                        <tr t-if="product.display_size">
+                            <th class="pe-4">Display Size</th>
+                            <td t-esc="product.display_size"/>
+                        </tr>
+                        <tr t-if="product.operating_system">
+                            <th class="pe-4">Operating System</th>
+                            <td t-esc="product.operating_system"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </xpath>
+    </template>
+</odoo>

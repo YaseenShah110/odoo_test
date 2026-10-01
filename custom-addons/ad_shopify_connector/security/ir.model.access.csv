@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_shopify_instance_user,shopify.instance.user,model_shopify_instance,group_shopify_user,1,0,0,0
+access_shopify_instance_manager,shopify.instance.manager,model_shopify_instance,group_shopify_manager,1,1,1,1
+access_shopify_export_product_wizard_user,shopify.export.product.wizard.user,model_shopify_export_product_wizard,group_shopify_user,1,1,1,1
+access_shopify_sync_log_user,shopify.sync.log.user,model_shopify_sync_log,group_shopify_user,1,0,0,0
+access_shopify_sync_log_manager,shopify.sync.log.manager,model_shopify_sync_log,group_shopify_manager,1,1,1,1
+access_shopify_export_customer_wizard_user,shopify.export.customer.wizard.user,model_shopify_export_customer_wizard,group_shopify_user,1,1,1,1
