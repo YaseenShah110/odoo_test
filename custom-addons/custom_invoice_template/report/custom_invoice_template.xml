@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_custom_invoice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="lang" t-value="o.partner_id.lang or o.company_id.partner_id.lang"/>
+                <t t-set="o" t-value="o.with_context(lang=lang)"/>
+                <t t-set="company" t-value="o.company_id"/>
+                <t t-set="currency" t-value="o.currency_id"/>
+                <t t-set="is_refund" t-value="o.move_type == 'out_refund'"/>
+                <t t-set="doc_title" t-value="'Credit Note' if is_refund else 'Invoice'"/>
+
+                <div class="article custom-invoice-wrap">
+                    <style>
+                        .custom-invoice-wrap {
+                            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                            color: #2b2b33;
+                            font-size: 12px;
+                            line-height: 1.5;
+                        }
+                        .ci-topbar {
+                            height: 6px;
+                            background: linear-gradient(90deg, #1a1f3c 0%, #4b3fb5 55%, #7c6ff0 100%);
+                            border-radius: 3px;
+                            margin-bottom: 22px;
+                        }
+                        .ci-header {
+                            display: table;
+                            width: 100%;
+                            margin-bottom: 18px;
+                        }
+                        .ci-header-left, .ci-header-right {
+                            display: table-cell;
+                            vertical-align: top;
+                        }
+                        .ci-header-right { text-align: right; }
+                        .ci-logo { max-height: 60px; max-width: 220px; margin-bottom: 6px; }
+                        .ci-company-name { font-size: 16px; font-weight: 700; color: #1a1f3c; }
+                        .ci-company-meta { color: #6b6b76; font-size: 10.5px; }
+                        .ci-doc-title {
+                            font-size: 30px;
+                            font-weight: 800;
+                            letter-spacing: 1px;
+                            color: #1a1f3c;
+                            text-transform: uppercase;
+                            margin: 0 0 4px 0;
+                        }
+                        .ci-status {
+                            display: inline-block;
+                            padding: 3px 12px;
+                            border-radius: 12px;
+                            font-size: 10px;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                        }
+                        .ci-status-paid { background: #e3f6ea; color: #1f8a4c; }
+                        .ci-status-due { background: #fdecea; color: #c0392b; }
+                        .ci-status-partial { background: #fff4e0; color: #b9770e; }
+                        .ci-status-draft { background: #eef0f5; color: #5b5f73; }
+                        .ci-meta-box {
+                            display: table;
+                            width: 100%;
+                            background: #f6f6fb;
+                            border-radius: 8px;
+                            padding: 12px 16px;
+                            margin-bottom: 20px;
+                        }
+                        .ci-meta-item {
+                            display: table-cell;
+                            padding-right: 18px;
+                        }
+                        .ci-meta-label {
+                            text-transform: uppercase;
+                            font-size: 9px;
+                            letter-spacing: 0.6px;
+                            color: #8a8a96;
+                            margin-bottom: 2px;
+                        }
+                        .ci-meta-value {
+                            font-size: 12.5px;
+                            font-weight: 700;
+                            color: #1a1f3c;
+                        }
+                        .ci-addresses {
+                            display: table;
+                            width: 100%;
+                            margin-bottom: 22px;
+                        }
+                        .ci-address-col {
+                            display: table-cell;
+                            width: 50%;
+                            vertical-align: top;
+                        }
+                        .ci-address-label {
+                            text-transform: uppercase;
+                            font-size: 9.5px;
+                            letter-spacing: 0.6px;
+                            color: #8a8a96;
+                            margin-bottom: 5px;
+                            font-weight: 700;
+                        }
+                        .ci-address-name {
+                            font-size: 13px;
+                            font-weight: 700;
+                            color: #1a1f3c;
+                            margin-bottom: 2px;
+                        }
+                        .ci-address-line { color: #4a4a55; font-size: 11px; }
+                        table.ci-lines {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 4px;
+                        }
+                        table.ci-lines thead th {
+                            background: #1a1f3c;
+                            color: #ffffff;
+                            text-transform: uppercase;
+                            font-size: 9.5px;
+                            letter-spacing: 0.5px;
+                            padding: 9px 10px;
+                            text-align: left;
+                        }
+                        table.ci-lines thead th.text-end { text-align: right; }
+                        table.ci-lines tbody td {
+                            padding: 9px 10px;
+                            border-bottom: 1px solid #ebebf2;
+                            font-size: 11.5px;
+                            vertical-align: top;
+                        }
+                        table.ci-lines tbody tr:nth-child(even) { background: #fafafd; }
+                        table.ci-lines td.text-end { text-align: right; white-space: nowrap; }
+                        .ci-line-name { font-weight: 600; color: #1a1f3c; }
+                        .ci-line-desc { color: #8a8a96; font-size: 10px; }
+                        .ci-totals-wrap {
+                            display: table;
+                            width: 100%;
+                            margin-top: 10px;
+                        }
+                        .ci-totals-spacer { display: table-cell; width: 55%; }
+                        .ci-totals-box { display: table-cell; width: 45%; vertical-align: top; }
+                        .ci-totals-row {
+                            display: table;
+                            width: 100%;
+                            padding: 5px 0;
+                        }
+                        .ci-totals-row .lbl, .ci-totals-row .val {
+                            display: table-cell;
+                            padding: 5px 2px;
+                            font-size: 11.5px;
+                            color: #4a4a55;
+                        }
+                        .ci-totals-row .val { text-align: right; font-weight: 600; color: #1a1f3c; }
+                        .ci-grand-total {
+                            background: #1a1f3c;
+                            color: #ffffff;
+                            border-radius: 8px;
+                            padding: 12px 16px;
+                            display: table;
+                            width: 100%;
+                            margin-top: 8px;
+                        }
+                        .ci-grand-total .lbl, .ci-grand-total .val {
+                            display: table-cell;
+                            font-size: 13px;
+                            font-weight: 700;
+                        }
+                        .ci-grand-total .val { text-align: right; font-size: 17px; }
+                        .ci-due {
+                            display: table;
+                            width: 100%;
+                            margin-top: 8px;
+                            padding: 10px 16px;
+                            border-radius: 8px;
+                            background: #fdecea;
+                        }
+                        .ci-due .lbl, .ci-due .val {
+                            display: table-cell;
+                            font-size: 12px;
+                            font-weight: 700;
+                            color: #c0392b;
+                        }
+                        .ci-due .val { text-align: right; }
+                        .ci-footer {
+                            margin-top: 30px;
+                            padding-top: 14px;
+                            border-top: 1px solid #ebebf2;
+                            display: table;
+                            width: 100%;
+                        }
+                        .ci-footer-col {
+                            display: table-cell;
+                            width: 50%;
+                            vertical-align: top;
+                            font-size: 10.5px;
+                            color: #6b6b76;
+                        }
+                        .ci-footer-title {
+                            text-transform: uppercase;
+                            font-size: 9px;
+                            letter-spacing: 0.6px;
+                            color: #8a8a96;
+                            font-weight: 700;
+                            margin-bottom: 4px;
+                        }
+                        .ci-thankyou {
+                            margin-top: 22px;
+                            text-align: center;
+                            color: #8a8a96;
+                            font-size: 10.5px;
+                            font-style: italic;
+                        }
+                    </style>
+
+                    <div class="ci-topbar"/>
+
+                    <div class="ci-header">
+                        <div class="ci-header-left">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" class="ci-logo"/>
+                            <div class="ci-company-name" t-esc="company.name"/>
+                            <div class="ci-company-meta">
+                                <span t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                            </div>
+                            <div class="ci-company-meta" t-if="company.phone">Tel: <span t-esc="company.phone"/></div>
+                            <div class="ci-company-meta" t-if="company.email">Email: <span t-esc="company.email"/></div>
+                            <div class="ci-company-meta" t-if="company.vat">VAT: <span t-esc="company.vat"/></div>
+                        </div>
+                        <div class="ci-header-right">
+                            <div class="ci-doc-title" t-esc="doc_title"/>
+                            <span t-attf-class="ci-status #{'ci-status-paid' if o.payment_state == 'paid' else ('ci-status-partial' if o.payment_state == 'partial' else ('ci-status-due' if o.state == 'posted' else 'ci-status-draft'))}">
+                                <t t-if="o.payment_state == 'paid'">Paid</t>
+                                <t t-elif="o.payment_state == 'partial'">Partially Paid</t>
+                                <t t-elif="o.state == 'posted'">Payment Due</t>
+                                <t t-else="">Draft</t>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="ci-meta-box">
+                        <div class="ci-meta-item">
+                            <div class="ci-meta-label">Invoice No.</div>
+                            <div class="ci-meta-value" t-esc="o.name or 'Draft'"/>
+                        </div>
+                        <div class="ci-meta-item">
+                            <div class="ci-meta-label">Invoice Date</div>
+                            <div class="ci-meta-value" t-field="o.invoice_date"/>
+                        </div>
+                        <div class="ci-meta-item" t-if="o.invoice_date_due">
+                            <div class="ci-meta-label">Due Date</div>
+                            <div class="ci-meta-value" t-field="o.invoice_date_due"/>
+                        </div>
+                        <div class="ci-meta-item" t-if="o.invoice_origin">
+                            <div class="ci-meta-label">Source Order</div>
+                            <div class="ci-meta-value" t-esc="o.invoice_origin"/>
+                        </div>
+                        <div class="ci-meta-item" t-if="o.ref">
+                            <div class="ci-meta-label">Reference</div>
+                            <div class="ci-meta-value" t-esc="o.ref"/>
+                        </div>
+                    </div>
+
+                    <div class="ci-addresses">
+                        <div class="ci-address-col">
+                            <div class="ci-address-label">Billed To</div>
+                            <div class="ci-address-name" t-esc="o.partner_id.name"/>
+                            <div class="ci-address-line" t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                            <div class="ci-address-line" t-if="o.partner_id.vat">VAT: <span t-esc="o.partner_id.vat"/></div>
+                            <div class="ci-address-line" t-if="o.partner_id.email">Email: <span t-esc="o.partner_id.email"/></div>
+                            <div class="ci-address-line" t-if="o.partner_id.phone">Phone: <span t-esc="o.partner_id.phone"/></div>
+                        </div>
+                        <div class="ci-address-col">
+                            <div class="ci-address-label">Payment Terms</div>
+                            <div class="ci-address-line" t-esc="o.invoice_payment_term_id.name or 'Immediate Payment'"/>
+                            <div class="ci-address-label" style="margin-top:10px;">Currency</div>
+                            <div class="ci-address-line" t-esc="currency.name"/>
+                        </div>
+                    </div>
+
+                    <table class="ci-lines">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th class="text-end">Qty</th>
+                                <th class="text-end">Unit Price</th>
+                                <th class="text-end">Tax</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.invoice_line_ids.filtered(lambda l: l.display_type == 'product')" t-as="line">
+                                <tr>
+                                    <td>
+                                        <div class="ci-line-name" t-esc="line.product_id.display_name or line.name"/>
+                                        <div class="ci-line-desc" t-if="line.name and line.product_id and line.name != line.product_id.display_name" t-esc="line.name"/>
+                                    </td>
+                                    <td class="text-end" t-esc="'%.2f' % line.quantity"/>
+                                    <td class="text-end" t-esc="line.price_unit" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                    <td class="text-end" t-esc="', '.join(line.tax_ids.mapped('name')) or '-'"/>
+                                    <td class="text-end" t-esc="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div class="ci-totals-wrap">
+                        <div class="ci-totals-spacer"/>
+                        <div class="ci-totals-box">
+                            <div class="ci-totals-row">
+                                <div class="lbl">Subtotal</div>
+                                <div class="val" t-esc="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </div>
+                            <div class="ci-totals-row">
+                                <div class="lbl">Taxes</div>
+                                <div class="val" t-esc="o.amount_tax" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </div>
+                            <div class="ci-grand-total">
+                                <div class="lbl">Total Due</div>
+                                <div class="val" t-esc="o.amount_total" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </div>
+                            <div class="ci-due" t-if="o.amount_residual and o.state == 'posted'">
+                                <div class="lbl">Outstanding</div>
+                                <div class="val" t-esc="o.amount_residual" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ci-footer">
+                        <div class="ci-footer-col">
+                            <div class="ci-footer-title">Payment Details</div>
+                            <t t-if="o.partner_bank_id">
+                                <div>Bank: <span t-esc="o.partner_bank_id.bank_id.name or ''"/></div>
+                                <div>Account / IBAN: <span t-esc="o.partner_bank_id.acc_number"/></div>
+                            </t>
+                            <t t-else="">
+                                <div>Please contact us for payment instructions.</div>
+                            </t>
+                        </div>
+                        <div class="ci-footer-col" style="text-align:right;">
+                            <div class="ci-footer-title">Contact</div>
+                            <div t-esc="company.name"/>
+                            <div t-if="company.website" t-esc="company.website"/>
+                            <div t-if="company.email" t-esc="company.email"/>
+                        </div>
+                    </div>
+
+                    <div class="ci-thankyou">Thank you for your business.</div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

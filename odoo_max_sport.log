@@ -1,0 +1,61 @@
+2026-10-07 16:56:37,151 22076 WARNING ? odoo.tools.config: missing --http-interface/http_interface, using 0.0.0.0 by default, will change to 127.0.0.1 in 20.0 
+2026-10-07 16:56:37,155 22076 INFO ? odoo: Odoo version 19.0 
+2026-10-07 16:56:37,155 22076 INFO ? odoo: Using configuration file at c:\odoo\odoo19\config\max_sport.conf 
+2026-10-07 16:56:37,155 22076 INFO ? odoo: addons paths: _NamespacePath(['C:\\odoo\\odoo19\\odoo\\addons', 'C:\\Users\\PMLS\\AppData\\Local\\OpenERP S.A.\\Odoo\\addons\\19.0', 'c:\\odoo\\odoo19\\addons', 'c:\\odoo\\odoo19\\custom-addons']) 
+2026-10-07 16:56:37,155 22076 INFO ? odoo: database: admin@localhost:5432 
+2026-10-07 16:56:40,968 22076 INFO ? odoo.service.server: HTTP service (werkzeug) running on RIZVI.RIZVI:8070 
+2026-10-07 16:56:41,153 22076 INFO max_sport odoo.modules.loading: loading 1 modules... 
+2026-10-07 16:56:41,167 22076 INFO max_sport odoo.modules.loading: 1 modules loaded in 0.01s, 0 queries (+0 extra) 
+2026-10-07 16:56:41,351 22076 INFO max_sport odoo.modules.loading: loading 71 modules... 
+2026-10-07 16:56:43,184 22076 INFO max_sport odoo.modules.loading: 71 modules loaded in 1.83s, 0 queries (+0 extra) 
+2026-10-07 16:56:43,454 22076 INFO max_sport odoo.modules.loading: Modules loaded. 
+2026-10-07 16:56:43,586 22076 INFO max_sport odoo.registry: Registry loaded in 2.617s 
+2026-10-07 16:56:43,680 22076 INFO max_sport odoo.addons.base.models.ir_http: Generating routing map for key 1 
+2026-10-07 16:56:44,744 22076 WARNING max_sport odoo.addons.base.models.ir_asset: IrAsset: the path "ebakery_maxs_theme/static/src/js/interactions/**/*.js" did not resolve to anything. 
+2026-10-07 16:56:44,964 22076 WARNING max_sport odoo.addons.base.models.ir_asset: IrAsset: the path "ebakery_maxs_theme/static/src/js/interactions/**/*.js" did not resolve to anything. 
+2026-10-07 16:56:45,149 22076 INFO max_sport werkzeug: 127.0.0.1 - - [07/Oct/2026 16:56:45] "GET / HTTP/1.1" 200 - 90 0.631 3.472
+2026-10-07 16:56:45,673 22076 INFO max_sport werkzeug: 127.0.0.1 - - [07/Oct/2026 16:56:45] "GET / HTTP/1.1" 200 - 1 0.000 0.004
+2026-10-07 16:56:46,042 22076 INFO max_sport werkzeug: 127.0.0.1 - - [07/Oct/2026 16:56:46] "GET / HTTP/1.1" 200 - 1 0.000 0.008
+2026-10-07 16:56:56,903 22076 INFO max_sport werkzeug: 127.0.0.1 - - [07/Oct/2026 16:56:56] "GET / HTTP/1.1" 200 - 1 0.007 0.007
+2026-10-07 16:56:58,104 22076 INFO max_sport werkzeug: 127.0.0.1 - - [07/Oct/2026 16:56:58] "GET / HTTP/1.1" 200 - 1 0.004 0.005
+2026-10-07 16:57:08,721 22076 INFO max_sport odoo.addons.base.models.assetsbundle: Generating a new asset bundle attachment /web/assets/1/16e0634/web.assets_frontend.min.css (id:735) 
+2026-10-07 16:57:08,760 22076 INFO max_sport werkzeug: 127.0.0.1 - - [07/Oct/2026 16:57:08] "GET /web/assets/1/16e0634/web.assets_frontend.min.css HTTP/1.1" 200 - 12 0.161 10.167
+2026-10-07 16:57:44,267 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Base: Auto-vacuum internal data' (1) starting 
+2026-10-07 16:57:45,109 22076 INFO max_sport odoo.addons.base.models.res_users: GC'd 1 user log entries 
+2026-10-07 16:57:45,124 22076 INFO max_sport odoo.addons.sms.models.sms_sms: GC'd 0 sms marked for deletion 
+2026-10-07 16:57:45,235 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Notification: Delete Notifications older than 6 Months' (5) starting 
+2026-10-07 16:57:45,300 22076 INFO max_sport odoo.addons.base.models.res_users: GC 'res.users.apikeys' delete 0 entries 
+2026-10-07 16:57:45,329 22076 INFO max_sport odoo.addons.api_doc.models.ir_attachment: GC'd 0 /doc cached index 
+2026-10-07 16:57:45,345 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Notification: Delete Notifications older than 6 Months' (5) fully done (#loop 1; done 0; remaining 0; duration 0.11s) 
+2026-10-07 16:57:45,360 22076 INFO max_sport odoo.addons.base.models.res_users: GC 'auth_totp.device' delete 0 entries 
+2026-10-07 16:57:45,360 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Mail: Post scheduled messages' (7) starting 
+2026-10-07 16:57:45,387 22076 INFO max_sport odoo.addons.mail.models.mail_scheduled_message: Posting 0 scheduled messages 
+2026-10-07 16:57:45,393 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Mail: Post scheduled messages' (7) fully done (#loop 1; done 0; remaining 0; duration 0.03s) 
+2026-10-07 16:57:45,403 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Notification: Notify scheduled messages' (8) starting 
+2026-10-07 16:57:45,435 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Notification: Notify scheduled messages' (8) fully done (#loop 1; done 0; remaining 0; duration 0.03s) 
+2026-10-07 16:57:45,439 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Mail: send web push notification' (9) starting 
+2026-10-07 16:57:45,456 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Mail: send web push notification' (9) fully done (#loop 1; done 0; remaining 0; duration 0.01s) 
+2026-10-07 16:57:45,474 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Discuss: channel member unmute' (10) starting 
+2026-10-07 16:57:45,502 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Discuss: channel member unmute' (10) fully done (#loop 1; done 0; remaining 0; duration 0.03s) 
+2026-10-07 16:57:45,508 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'SMS: SMS Queue Manager' (12) starting 
+2026-10-07 16:57:45,534 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'SMS: SMS Queue Manager' (12) fully done (#loop 1; done 0; remaining 0; duration 0.03s) 
+2026-10-07 16:57:45,541 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Snailmail: process letters queue' (13) starting 
+2026-10-07 16:57:45,551 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Snailmail: process letters queue' (13) fully done (#loop 1; done 0; remaining 0; duration 0.02s) 
+2026-10-07 16:57:45,613 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Payment: Post-process transactions' (15) starting 
+2026-10-07 16:57:46,002 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Payment: Post-process transactions' (15) fully done (#loop 1; done 0; remaining 0; duration 0.39s) 
+2026-10-07 16:57:46,016 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Send invoices automatically' (17) starting 
+2026-10-07 16:57:46,060 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Send invoices automatically' (17) fully done (#loop 1; done 0; remaining 0; duration 0.03s) 
+2026-10-07 16:57:46,060 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Disable unused snippets assets' (18) starting 
+2026-10-07 16:57:47,097 22076 INFO max_sport odoo.addons.base.models.ir_attachment: filestore gc 443 checked, 0 removed 
+2026-10-07 16:57:47,171 22076 INFO max_sport odoo.addons.base.models.res_device: GC device logs delete 0 entries 
+2026-10-07 16:57:47,284 22076 INFO max_sport odoo.addons.base.models.res_device: GC device logs delete 0 entries 
+2026-10-07 16:57:47,316 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Base: Auto-vacuum internal data' (1) fully done (#loop 1; done 0; remaining 0; duration 3.05s) 
+2026-10-07 16:57:47,339 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Website Visitor : clean inactive visitors' (19) starting 
+2026-10-07 16:57:47,356 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Website Visitor : clean inactive visitors' (19) fully done (#loop 1; done 0; remaining 0; duration 0.02s) 
+2026-10-07 16:57:47,363 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'eCommerce: send email to customers about their abandoned cart' (22) starting 
+2026-10-07 16:57:47,393 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'eCommerce: send email to customers about their abandoned cart' (22) fully done (#loop 1; done 0; remaining 0; duration 0.03s) 
+2026-10-07 16:57:47,394 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Mail: Email Queue Manager' (3) starting 
+2026-10-07 16:57:47,413 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Mail: Email Queue Manager' (3) fully done (#loop 1; done 0; remaining 0; duration 0.02s) 
+2026-10-07 16:57:47,413 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Users: Notify About Unregistered Users' (11) starting 
+2026-10-07 16:57:47,473 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Users: Notify About Unregistered Users' (11) fully done (#loop 1; done 0; remaining 0; duration 0.06s) 
+2026-10-07 16:57:48,823 22076 INFO max_sport odoo.addons.base.models.ir_cron: Job 'Disable unused snippets assets' (18) fully done (#loop 1; done 0; remaining 0; duration 2.77s) 

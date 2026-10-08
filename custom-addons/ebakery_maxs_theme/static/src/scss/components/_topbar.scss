@@ -1,0 +1,67 @@
+// ebakery_maxs_theme — Top Bar (utility strip above the main header).
+//
+// Built to the desktop (1920px) Figma frame only — no mobile-specific
+// layout was requested for this section. It still uses flex-wrap + a
+// responsive container so it degrades without horizontal overflow at
+// narrower widths, rather than a bespoke mobile design.
+
+.o_ebakery_topbar {
+    background-color: $ebakery-topbar-bg;
+    font-family: $font-family-base;
+    font-size: $ebakery-topbar-font-size;
+    line-height: 1;
+    color: $ebakery-topbar-text;
+    padding-top: $ebakery-topbar-padding-y;
+    padding-bottom: $ebakery-topbar-padding-y;
+
+    &_inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: $ebakery-topbar-gap;
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        // Figma's 240px side padding is a 1920px-desktop-frame value;
+        // only applied from xl up so narrower viewports fall back to the
+        // default gutter above instead of squeezing the fixed 240px.
+        @include media-breakpoint-up(xl) {
+            padding-left: $ebakery-topbar-padding-x;
+            padding-right: $ebakery-topbar-padding-x;
+        }
+    }
+
+    &_left,
+    &_right {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: $ebakery-topbar-gap;
+    }
+
+    &_dot {
+        display: inline-block;
+        flex: 0 0 auto;
+        width: $ebakery-topbar-dot-size;
+        height: $ebakery-topbar-dot-size;
+        border-radius: 50%;
+        background-color: $ebakery-color-accent;
+    }
+
+    &_text {
+        color: inherit;
+        white-space: nowrap;
+    }
+
+    &_link {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+}

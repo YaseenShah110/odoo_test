@@ -1,0 +1,15 @@
+// ebakery_maxs_theme — global theme entry point.
+//
+// Loaded in `web.assets_frontend`, after variables.scss. Only global
+// resets/typography hooks live here — section-specific styles belong in
+// static/src/scss/components/_<section>.scss and are picked up
+// automatically by the components/**/*.scss glob in __manifest__.py.
+//
+// No @import statements are needed here: Odoo's asset bundler concatenates
+// the files listed in the manifest in order, so variables.scss tokens
+// declared above are already in scope.
+
+body {
+    // Global typography hook — font-family override goes through
+    // $font-family-base in primary_variables.scss, not here.
+}

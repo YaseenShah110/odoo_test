@@ -1,0 +1,32 @@
+// ebakery_maxs_theme — Odoo / Bootstrap variable OVERRIDES ONLY.
+//
+// This file is loaded in the `web._assets_primary_variables` bundle, i.e.
+// BEFORE Odoo's own variable definitions are consumed. Only SCSS variable
+// *overrides* belong here (no selectors, no CSS rules).
+//
+// Values are intentionally left as commented placeholders until the design
+// tokens are confirmed from the Figma screenshots — do not guess hex/px
+// values here.
+
+// --- Brand colors (Odoo website color system) ---------------------------
+// $o-color-1: #000000 !default; // Primary
+// $o-color-2: #000000 !default; // Secondary
+// $o-color-3: #000000 !default; // Light
+// $o-color-4: #000000 !default; // Dark / contrast
+// $o-color-5: #000000 !default; // Extra
+
+// --- Bootstrap theme colors ----------------------------------------------
+// $primary: $o-color-1 !default;
+// $secondary: $o-color-2 !default;
+
+// --- Typography ------------------------------------------------------------
+// Confirmed as the body font via Figma inspector on the top bar (12px/400/700)
+// and hero sub-copy. Not yet confirmed for headings — leave
+// $headings-font-family untouched until the Header/Hero sections confirm it.
+$font-family-base: "Open Sans", sans-serif !default;
+// $headings-font-family: "FontNameFromFigma", sans-serif !default;
+// $font-size-base: 1rem !default;
+
+// --- Layout -----------------------------------------------------------------
+// $grid-gutter-width: 1.5rem !default;
+// $border-radius: 0.25rem !default;

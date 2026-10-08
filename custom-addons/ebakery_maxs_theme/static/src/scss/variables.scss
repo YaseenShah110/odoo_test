@@ -1,0 +1,52 @@
+// ebakery_maxs_theme — our own design tokens (not Bootstrap/Odoo variables).
+//
+// Loaded in `web.assets_frontend`, after primary_variables.scss has already
+// fed Bootstrap/Odoo's variable compilation. These are theme-specific
+// tokens referenced by theme.scss and the per-section partials in
+// components/.
+//
+// All values are placeholders — fill in once confirmed from the Figma
+// screenshots (ask if a value isn't explicitly given).
+
+// --- Color tokens ------------------------------------------------------------
+// $ebakery-color-brand: null;
+//
+// Confirmed via Figma color-picker on the red bullet dot in the Top Bar
+// section. It visually matches the red CTA buttons seen in the (not yet
+// built) Hero screenshot too, but that hasn't been confirmed with its own
+// color-picker reading yet — do not treat this as the site-wide $primary
+// override until the Header/Hero sections confirm it.
+$ebakery-color-accent: #ED1E24;
+// $ebakery-color-text: null;
+// $ebakery-color-muted: null;
+// $ebakery-color-bg: null;
+// $ebakery-color-border: null;
+
+// --- Top Bar section tokens (confirmed) --------------------------------------
+$ebakery-topbar-bg: #333333;
+$ebakery-topbar-text: #E6E7E6;
+$ebakery-topbar-font-size: 12px;
+$ebakery-topbar-gap: 24px;
+$ebakery-topbar-padding-y: 10px;
+$ebakery-topbar-padding-x: 240px; // desktop (1920px frame) value — not yet
+// confirmed at narrower viewports; component uses Bootstrap's responsive
+// container instead of this fixed value (see _topbar.scss).
+$ebakery-topbar-dot-size: 8px;
+
+// --- Spacing scale ------------------------------------------------------------
+// $ebakery-space-xs: null;
+// $ebakery-space-sm: null;
+// $ebakery-space-md: null;
+// $ebakery-space-lg: null;
+// $ebakery-space-xl: null;
+
+// --- Typography ------------------------------------------------------------
+// $ebakery-font-family-heading: null;
+// $ebakery-font-family-body: null;
+// $ebakery-font-weight-regular: null;
+// $ebakery-font-weight-bold: null;
+
+// --- Radii / shadows ------------------------------------------------------------
+// $ebakery-radius-sm: null;
+// $ebakery-radius-md: null;
+// $ebakery-shadow-card: null;

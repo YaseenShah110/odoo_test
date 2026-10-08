@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="ebakery_maxs_theme_topbar_fonts" inherit_id="website.layout"
+              name="eBakery Max Sport – Topbar Google Font">
+        <!--
+            Hook: //head position="inside" — the same stable hook core itself
+            uses in website.layout (see website/views/website_templates.xml,
+            tracking-code script block). Core already emits a preconnect to
+            fonts.gstatic.com in this template; we only add the stylesheet
+            link for the actual font family confirmed for this theme.
+        -->
+        <xpath expr="//head" position="inside">
+            <link rel="stylesheet"
+                  href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"/>
+        </xpath>
+    </template>
+
+    <template id="ebakery_maxs_theme_topbar" inherit_id="website.layout"
+              name="eBakery Max Sport – Top Bar">
+        <!--
+            Hook: //header position="before" — the same hook core itself uses
+            right above (see the cta_btn_text / header_content_width t-set
+            block in website.layout) to inject content immediately before the
+            <header> element. Safe, documented insertion point.
+        -->
+        <xpath expr="//header" position="before">
+            <div class="o_ebakery_topbar" data-name="Top Bar">
+                <div class="o_ebakery_topbar_inner">
+                    <div class="o_ebakery_topbar_left">
+                        <span class="o_ebakery_topbar_dot" aria-hidden="true"/>
+                        <span class="o_ebakery_topbar_text">
+                            <strong>Schnelle Lieferung</strong> – Versand aus Österreich
+                        </span>
+                        <span class="o_ebakery_topbar_text">
+                            Bis 12:00 Uhr bestellt, am selben Tag verpackt
+                        </span>
+                    </div>
+                    <div class="o_ebakery_topbar_right">
+                        <span class="o_ebakery_topbar_text">
+                            <strong t-field="website.company_id.phone"/> Mo.–Fr.: 14:00–18:00 Uhr
+                        </span>
+                        <a href="/contactus" class="o_ebakery_topbar_text o_ebakery_topbar_link">Kontakt</a>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
